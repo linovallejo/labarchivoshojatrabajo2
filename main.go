@@ -34,7 +34,7 @@ var archivoBinarioDisco string = "disk.dsk"
 func main() {
 	limpiarConsola()
 	PrintCopyright()
-	fmt.Println("Sistema de Archivos - Tarea2")
+	fmt.Println("Procesador de Comandos - Hoja de Trabajo 2")
 
 	var input string
 	scanner := bufio.NewScanner(os.Stdin)
