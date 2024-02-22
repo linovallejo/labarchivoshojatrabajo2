@@ -19,3 +19,8 @@
 
 # Go workspace file
 go.work
+
+# HojaTrabajo2
+*.dot
+*.png
+*.dsk

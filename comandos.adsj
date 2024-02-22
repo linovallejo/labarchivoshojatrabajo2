@@ -1,0 +1,5 @@
+MKDISK ->size=10 ->unit=M
+FDISK ->letter=A ->unit=M ->name=Particion1 ->size=4
+FDISK ->letter=A ->unit=M ->name=Particion2 ->size=5
+FDISK ->letter=A ->unit=M ->name=Parti3 ->size=2
+REP
