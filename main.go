@@ -122,18 +122,18 @@ func extractMKDISKParams(params []string) (int64, string, error) {
 			var err error
 			size, err = strconv.ParseInt(sizeStr, 10, 64)
 			if err != nil || size <= 0 {
-				return 0, "", fmt.Errorf("invalid size parameter")
+				return 0, "", fmt.Errorf("Parametro tamaño invalido")
 			}
 		} else if strings.HasPrefix(param, "->unit=") {
 			unit = strings.TrimPrefix(param, "->unit=")
 			if unit != "K" && unit != "M" {
-				return 0, "", fmt.Errorf("invalid unit parameter")
+				return 0, "", fmt.Errorf("Parametro unidad invalido")
 			}
 		}
 	}
 
 	if size == 0 {
-		return 0, "", fmt.Errorf("size parameter is mandatory")
+		return 0, "", fmt.Errorf("Parametro tamaño es obligatorio")
 	}
 
 	return size, unit, nil
@@ -146,7 +146,7 @@ func calculateDiskSize(size int64, unit string) (int64, error) {
 	case "M":
 		return size * 1024 * 1024, nil
 	default:
-		return 0, fmt.Errorf("unknown unit")
+		return 0, fmt.Errorf("Unidad invalida")
 	}
 }
 
@@ -196,12 +196,12 @@ func extractFDISKParams(params []string) (int64, string, string, string, error) 
 			var err error
 			size, err = strconv.ParseInt(sizeStr, 10, 64)
 			if err != nil || size <= 0 {
-				return 0, "", "", "", fmt.Errorf("invalid size parameter")
+				return 0, "", "", "", fmt.Errorf("Parametro tamaño invalido")
 			}
 		case strings.HasPrefix(param, "->unit="):
 			unit = strings.TrimPrefix(param, "->unit=")
 			if unit != "B" && unit != "K" && unit != "M" {
-				return 0, "", "", "", fmt.Errorf("invalid unit parameter")
+				return 0, "", "", "", fmt.Errorf("Parametro unidad invalido")
 			}
 		case strings.HasPrefix(param, "->letter="):
 			letter = strings.TrimPrefix(param, "->letter=")
@@ -213,7 +213,7 @@ func extractFDISKParams(params []string) (int64, string, string, string, error) 
 	}
 
 	if size == 0 || letter == "" || name == "" {
-		return 0, "", "", "", fmt.Errorf("missing mandatory FDISK parameter")
+		return 0, "", "", "", fmt.Errorf("Parametro obligatorio faltante")
 	}
 
 	// Unidad por defecto es Kilobytes
@@ -299,7 +299,7 @@ func createPartition(mbr *MBR, size int64, unit string, letter string, name stri
 	case "M":
 		sizeInBytes = size * 1024 * 1024
 	default:
-		return fmt.Errorf("invalid unit")
+		return fmt.Errorf("Unidad invalida")
 	}
 
 	// Comprbar si hay un slot disponible para la partición disponible y validar la unicidad del nombre
@@ -310,12 +310,12 @@ func createPartition(mbr *MBR, size int64, unit string, letter string, name stri
 				partitionIndex = i
 			}
 		} else if string(partition.Name[:]) == name {
-			return fmt.Errorf("partition name already exists")
+			return fmt.Errorf("Nombre de particion ya existe")
 		}
 	}
 
 	if partitionIndex == -1 {
-		return fmt.Errorf("no available partition slots")
+		return fmt.Errorf("No hay slots disponibles para la nueva partición")
 	}
 
 	// Verifica si hay espacio suficiente para la nueva partición (asumiendo una asignación lineal para simplificar).
